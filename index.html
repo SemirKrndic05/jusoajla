@@ -188,6 +188,10 @@
     .product-card span { color:var(--muted); font-size:.9rem; }
     .product-card .capacity { font-size:1.65rem; font-weight:900; color:var(--navy); letter-spacing:-.03em; }
     .product-card .price { display:block; margin-top:8px; font-size:1.15rem; font-weight:900; color:var(--blue); }
+    .availability { display:inline-flex; align-items:center; gap:7px; margin-top:12px; padding:6px 10px; border-radius:999px; font-size:.78rem; font-weight:800; }
+    .availability::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
+    .availability.in-stock { background:#e8f8ef; color:#1c8a4a; }
+    .availability.out-stock { background:#fff1f1; color:#b33a3a; }
     .price-notice { margin:22px 30px 0; padding:15px 18px; border-radius:14px; background:var(--blue-soft); border:1px solid #cfeaf7; color:#385269; font-size:.92rem; }
     .price-notice strong { color:var(--navy); }
     .catalog-empty { grid-column:1/-1; border:1px dashed #cfd8e2; border-radius:18px; padding:34px; text-align:center; background:#fbfcfd; }
@@ -499,16 +503,23 @@
     <img id="lightboxImage" alt="">
   </div>
 
-  <script>
-    const akumulatori = [
-      { ah: 45, price: '80 KM' },
-      { ah: 55, price: '90 KM' },
-      { ah: 62, price: '105 KM' },
-      { ah: 75, price: '115 KM' },
-      { ah: 85, price: '135 KM' },
-      { ah: 100, price: '145 KM' }
-    ];
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js';
+    import { getFirestore, collection, onSnapshot } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js';
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwB0G3mFKUDrE_sAL9gc0LwXKf1E2Gz_s",
+      authDomain: "jusoajla.firebaseapp.com",
+      projectId: "jusoajla",
+      storageBucket: "jusoajla.firebasestorage.app",
+      messagingSenderId: "780169204154",
+      appId: "1:780169204154:web:9f466c86bcbf07f76b4d83"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let akumulatori = [];
     const catalogGrid = document.getElementById('catalogGrid');
     const catalogSearch = document.getElementById('catalogSearch');
 
@@ -532,11 +543,31 @@
         <article class="product-card">
           <div class="capacity">${item.ah} Ah</div>
           <span>Cijena uz predaju starog akumulatora</span>
-          <span class="price">${item.price}</span>
+          <span class="price">${item.cijena} KM</span>
+          <span class="availability ${item.stanje > 0 ? 'in-stock' : 'out-stock'}">
+            ${item.stanje > 0 ? `Na stanju: ${item.stanje} kom.` : 'Trenutno nije na stanju'}
+          </span>
         </article>`).join('');
     }
 
-    renderCatalog();
+    catalogGrid.innerHTML = '<div class="catalog-empty"><strong>Učitavanje akumulatora...</strong></div>';
+
+    onSnapshot(collection(db, 'akumulatori'), snapshot => {
+      akumulatori = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(item => item.aktivan === true)
+        .sort((a, b) => Number(a.ah) - Number(b.ah));
+      renderCatalog(catalogSearch.value);
+    }, error => {
+      console.error('Greška pri učitavanju akumulatora:', error);
+      catalogGrid.innerHTML = `
+        <div class="catalog-empty">
+          <strong>Trenutno nije moguće učitati ponudu.</strong>
+          <p>Pokušajte ponovo kasnije ili nas pozovite za provjeru ponude.</p>
+          <a class="btn btn-primary" href="tel:+38761729027">Pozovi 061 729 027</a>
+        </div>`;
+    });
+
     catalogSearch.addEventListener('input', e => renderCatalog(e.target.value));
 
     const menuBtn = document.getElementById('menuBtn');
