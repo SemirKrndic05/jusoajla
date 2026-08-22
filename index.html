@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JUSO AJLA d.o.o. - prodaja, ugradnja, otkup i zamjena akumulatora u Vukovijama Gornjim, Kalesija.">
+  <meta name="theme-color" content="#0b2b52">
+  <title>JUSO AJLA d.o.o. | Akumulatori Kalesija</title>
+  <style>
+    :root {
+      --navy: #0b2b52;
+      --navy-2: #123f73;
+      --blue: #0499d7;
+      --blue-soft: #eaf7fd;
+      --yellow: #ffae00;
+      --ink: #122033;
+      --muted: #607080;
+      --line: #e6ebf0;
+      --surface: #ffffff;
+      --bg: #f7f9fb;
+      --radius: 20px;
+      --shadow: 0 18px 50px rgba(12, 35, 64, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, input { font: inherit; }
+
+    .container { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .section { padding: 84px 0; scroll-margin-top: 90px; }
+    .section--tight { padding-top: 26px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--blue);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--yellow); border-radius: 99px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(2.4rem, 5vw, 4.75rem); line-height: 1.02; letter-spacing: -.045em; margin-bottom: 20px; }
+    h2 { font-size: clamp(1.9rem, 3vw, 3rem); line-height: 1.12; letter-spacing: -.035em; margin-bottom: 14px; }
+    h3 { line-height: 1.2; }
+    .lead { max-width: 700px; color: var(--muted); font-size: 1.08rem; }
+    .section-head { max-width: 760px; margin-bottom: 36px; }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(230,235,240,.9);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+    .brand img { width: 105px; height: 62px; object-fit: contain; mix-blend-mode: multiply; }
+    .brand-copy { display: none; }
+    .brand-copy strong { display:block; color:var(--navy); line-height:1.05; letter-spacing:.02em; }
+    .brand-copy span { color:var(--muted); font-size:.72rem; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a {
+      text-decoration: none;
+      color: #33475d;
+      font-weight: 700;
+      font-size: .92rem;
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: .2s ease;
+    }
+    .nav-links a:hover { background: var(--blue-soft); color: var(--navy); }
+    .nav-links .nav-cta { background: var(--navy); color: white; margin-left: 4px; }
+    .nav-links .nav-cta:hover { background: var(--navy-2); color: white; }
+    .menu-btn { display: none; border: 0; background: transparent; color: var(--navy); width: 44px; height: 44px; border-radius: 12px; cursor: pointer; }
+    .menu-btn svg { width: 24px; height: 24px; }
+
+    /* Hero */
+    .hero-wrap { padding: 42px 0 24px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: stretch;
+      min-height: 560px;
+      border-radius: 30px;
+      background: var(--navy);
+      box-shadow: 0 28px 70px rgba(11,43,82,.18);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(4,153,215,.17);
+      top: -220px;
+      left: 36%;
+      pointer-events: none;
+    }
+    .hero-copy { position: relative; z-index: 2; color: white; padding: clamp(38px, 6vw, 72px); display:flex; flex-direction:column; justify-content:center; }
+    .hero-copy .eyebrow { color: #86d8f9; }
+    .hero-copy .lead { color: rgba(255,255,255,.78); max-width: 620px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top: 10px; }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      min-height:50px;
+      padding:0 20px;
+      border-radius:14px;
+      border:1px solid transparent;
+      text-decoration:none;
+      font-weight:800;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .btn svg { width:20px; height:20px; flex:0 0 auto; }
+    .btn-primary { background: var(--blue); color:white; }
+    .btn-primary:hover { transform: translateY(-2px); background:#078bc0; }
+    .btn-secondary { background: rgba(255,255,255,.08); color:white; border-color: rgba(255,255,255,.2); }
+    .btn-secondary:hover { background: rgba(255,255,255,.14); transform: translateY(-2px); }
+    .hero-photo { position: relative; min-height: 470px; }
+    .hero-photo img { width:100%; height:100%; object-fit:contain; background:#079fda; }
+    .hero-photo::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg, var(--navy) 0%, rgba(11,43,82,.03) 20%, transparent 45%); pointer-events:none; }
+
+    /* Quick facts */
+    .quick-facts {
+      position: relative;
+      z-index: 4;
+      margin-top: -28px;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      background:white;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+    }
+    .fact { display:flex; gap:13px; align-items:flex-start; padding:22px 24px; }
+    .fact + .fact { border-left:1px solid var(--line); }
+    .icon-box { width:42px; height:42px; flex:0 0 auto; border-radius:12px; display:grid; place-items:center; background:var(--blue-soft); color:var(--blue); }
+    .icon-box svg { width:21px; height:21px; }
+    .fact strong { display:block; color:var(--navy); font-size:.96rem; }
+    .fact span, .fact a { color:var(--muted); font-size:.88rem; text-decoration:none; }
+
+    /* Services */
+    .services { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .service-card { background:white; border:1px solid var(--line); border-radius:var(--radius); padding:28px; box-shadow: 0 12px 34px rgba(12,35,64,.05); }
+    .service-card .icon-box { margin-bottom:20px; }
+    .service-card h3 { margin-bottom:8px; color:var(--navy); font-size:1.12rem; }
+    .service-card p { color:var(--muted); margin-bottom:0; font-size:.94rem; }
+
+    /* Battery catalogue */
+    .catalog-shell { background:white; border:1px solid var(--line); border-radius:26px; overflow:hidden; box-shadow: var(--shadow); }
+    .catalog-top { display:flex; justify-content:space-between; align-items:end; gap:24px; padding:30px; border-bottom:1px solid var(--line); }
+    .catalog-top h2 { margin-bottom:6px; }
+    .catalog-top p { margin-bottom:0; color:var(--muted); }
+    .search { position:relative; width:min(100%, 340px); }
+    .search svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:18px; color:#8290a0; }
+    .search input { width:100%; height:48px; border:1px solid #d9e0e7; border-radius:13px; padding:0 14px 0 42px; outline:none; background:#fbfcfd; }
+    .search input:focus { border-color:var(--blue); box-shadow:0 0 0 4px rgba(4,153,215,.10); }
+    .brand-strip { display:flex; flex-wrap:wrap; gap:10px; padding:24px 30px 6px; }
+    .brand-pill { background:#f4f7fa; border:1px solid #e7ecf1; color:#405267; border-radius:999px; padding:8px 13px; font-size:.84rem; font-weight:800; }
+    .catalog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:24px 30px 30px; }
+    .product-card { border:1px solid var(--line); border-radius:16px; padding:18px; background:#fff; }
+    .product-card strong { display:block; color:var(--navy); }
+    .product-card span { color:var(--muted); font-size:.9rem; }
+    .product-card .capacity { font-size:1.65rem; font-weight:900; color:var(--navy); letter-spacing:-.03em; }
+    .product-card .price { display:block; margin-top:8px; font-size:1.15rem; font-weight:900; color:var(--blue); }
+    .price-notice { margin:22px 30px 0; padding:15px 18px; border-radius:14px; background:var(--blue-soft); border:1px solid #cfeaf7; color:#385269; font-size:.92rem; }
+    .price-notice strong { color:var(--navy); }
+    .catalog-empty { grid-column:1/-1; border:1px dashed #cfd8e2; border-radius:18px; padding:34px; text-align:center; background:#fbfcfd; }
+    .catalog-empty strong { display:block; color:var(--navy); margin-bottom:6px; }
+    .catalog-empty p { color:var(--muted); margin:0 auto 16px; max-width:640px; }
+    .catalog-note { padding:0 30px 28px; color:var(--muted); font-size:.84rem; }
+
+    /* Gallery */
+    .gallery-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:150px; gap:14px; }
+    .gallery-item { position:relative; overflow:hidden; border:0; padding:0; border-radius:18px; cursor:zoom-in; background:#dfe6ed; box-shadow:0 10px 26px rgba(12,35,64,.07); }
+    .gallery-item img { width:100%; height:100%; object-fit:cover; transition:transform .35s ease; }
+    .gallery-item:hover img { transform:scale(1.035); }
+    .gallery-item:nth-child(1), .gallery-item:nth-child(6) { grid-column:span 6; grid-row:span 2; }
+    .gallery-item:nth-child(2), .gallery-item:nth-child(3), .gallery-item:nth-child(4), .gallery-item:nth-child(5), .gallery-item:nth-child(7), .gallery-item:nth-child(8), .gallery-item:nth-child(9) { grid-column:span 3; grid-row:span 2; }
+    .gallery-item:nth-child(9) { grid-column:span 6; }
+
+    /* About */
+    .about-grid { display:grid; grid-template-columns:.9fr 1.1fr; gap:32px; align-items:center; }
+    .about-photo { border-radius:26px; overflow:hidden; min-height:440px; box-shadow:var(--shadow); }
+    .about-photo img { width:100%; height:100%; min-height:440px; object-fit:cover; }
+    .about-card { background:white; border:1px solid var(--line); border-radius:26px; padding:clamp(30px,4vw,48px); box-shadow:var(--shadow); }
+    .about-card p { color:var(--muted); }
+    .about-list { display:grid; gap:12px; margin-top:24px; }
+    .about-list div { display:flex; gap:12px; align-items:flex-start; }
+    .check { width:22px; height:22px; flex:0 0 auto; margin-top:2px; border-radius:50%; display:grid; place-items:center; background:#e8f8ef; color:#1c8a4a; }
+    .check svg { width:14px; height:14px; }
+
+    /* Contact */
+    .contact-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:20px; }
+    .contact-card, .map-wrap { background:white; border:1px solid var(--line); border-radius:24px; overflow:hidden; box-shadow:var(--shadow); }
+    .contact-card { padding:32px; }
+    .contact-list { display:grid; gap:18px; margin-top:26px; }
+    .contact-row { display:grid; grid-template-columns:42px 1fr; gap:13px; align-items:flex-start; }
+    .contact-row strong { display:block; color:var(--navy); margin-bottom:2px; }
+    .contact-row span, .contact-row a { color:var(--muted); text-decoration:none; }
+    .contact-row a:hover { color:var(--blue); }
+    .map-wrap { min-height:460px; }
+    .map-wrap iframe { width:100%; height:100%; min-height:460px; border:0; display:block; }
+    .contact-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; }
+    .contact-actions .btn-secondary { color:var(--navy); background:#f3f7fa; border-color:#dde5ec; }
+
+    /* Footer */
+    footer { background:#081f3c; color:rgba(255,255,255,.72); padding:34px 0; margin-top:30px; }
+    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; font-size:.88rem; }
+    .footer-row strong { color:white; }
+    .footer-row a { color:white; text-decoration:none; }
+
+    /* Lightbox */
+    .lightbox { position:fixed; inset:0; z-index:500; background:rgba(4,14,26,.92); display:none; place-items:center; padding:28px; }
+    .lightbox.open { display:grid; }
+    .lightbox img { max-width:min(1200px,92vw); max-height:88vh; border-radius:16px; box-shadow:0 30px 90px rgba(0,0,0,.5); }
+    .lightbox-close { position:absolute; top:18px; right:18px; width:46px; height:46px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; border-radius:50%; cursor:pointer; font-size:28px; line-height:1; }
+
+    @media (min-width: 920px) { .brand-copy { display:block; } }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns:1fr; min-height:auto; }
+      .hero-photo { min-height:360px; order:-1; }
+      .hero-photo::after { background:linear-gradient(0deg, var(--navy) 0%, rgba(11,43,82,.02) 20%, transparent 44%); }
+      .hero-copy { padding-top:24px; }
+      .quick-facts { grid-template-columns:1fr; margin-top:18px; }
+      .fact + .fact { border-left:0; border-top:1px solid var(--line); }
+      .services, .catalog-grid { grid-template-columns:1fr 1fr; }
+      .about-grid, .contact-grid { grid-template-columns:1fr; }
+      .about-photo { min-height:360px; }
+      .gallery-item:nth-child(n) { grid-column:span 6; grid-row:span 2; }
+      .gallery-item:nth-child(1), .gallery-item:nth-child(6), .gallery-item:nth-child(9) { grid-column:span 12; }
+    }
+    @media (max-width: 760px) {
+      .container { width:min(100% - 28px, 1160px); }
+      .section { padding:64px 0; }
+      .nav { min-height:70px; }
+      .brand img { width:94px; height:56px; }
+      .menu-btn { display:grid; place-items:center; }
+      .nav-links {
+        display:none;
+        position:absolute;
+        top:70px;
+        left:14px;
+        right:14px;
+        flex-direction:column;
+        align-items:stretch;
+        background:white;
+        border:1px solid var(--line);
+        box-shadow:var(--shadow);
+        border-radius:18px;
+        padding:10px;
+      }
+      .nav-links.open { display:flex; }
+      .nav-links a { padding:12px 14px; }
+      .nav-links .nav-cta { margin-left:0; text-align:center; }
+      .hero-wrap { padding-top:18px; }
+      .hero { border-radius:22px; }
+      .hero-photo { min-height:280px; }
+      .hero-copy { padding:30px 24px 34px; }
+      .hero-actions { flex-direction:column; align-items:stretch; }
+      .quick-facts { border-radius:16px; }
+      .services, .catalog-grid { grid-template-columns:1fr; }
+      .catalog-top { align-items:stretch; flex-direction:column; padding:24px; }
+      .search { width:100%; }
+      .brand-strip, .catalog-grid { padding-left:24px; padding-right:24px; }
+      .catalog-note { padding-left:24px; padding-right:24px; }
+      .gallery-grid { grid-auto-rows:120px; gap:10px; }
+      .gallery-item:nth-child(n) { grid-column:span 6; grid-row:span 2; }
+      .gallery-item:nth-child(1), .gallery-item:nth-child(6) { grid-column:span 12; }
+      .gallery-item:nth-child(9) { grid-column:span 12; }
+      .contact-card { padding:26px; }
+      .footer-row { flex-direction:column; align-items:flex-start; }
+    }
+    @media (max-width: 480px) {
+      .gallery-item:nth-child(n) { grid-column:span 12; grid-row:span 2; }
+      h1 { font-size:2.35rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#pocetna" aria-label="JUSO AJLA početna">
+        <img src="assets/logo.png" alt="JUSOAJLA logo">
+        <span class="brand-copy"><strong>JUSO AJLA d.o.o.</strong><span>Akumulatori • Kalesija</span></span>
+      </a>
+
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Otvori meni" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Glavna navigacija">
+        <a href="#pocetna">Početna</a>
+        <a href="#akumulatori">Akumulatori</a>
+        <a href="#galerija">Galerija</a>
+        <a href="#onama">O nama</a>
+        <a href="#kontakt">Kontakt</a>
+        <a class="nav-cta" href="tel:+38761729027">Pozovi 061 729 027</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-wrap" id="pocetna">
+      <div class="container">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">JUSO AJLA • Vukovije Gornje</span>
+            <h1>Kvalitet koji pali iz prve.</h1>
+            <p class="lead">Prodaja, stručna ugradnja, otkup i zamjena akumulatora za putnička, teretna i druga vozila. Tu smo da vam pomognemo izabrati odgovarajući model.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#akumulatori">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h11l2 4v6H5v-6l1-4Z"/><path d="M8 17v2m8-2v2M9 11h6"/></svg>
+                Pogledaj akumulatore
+              </a>
+              <a class="btn btn-secondary" href="https://www.google.com/maps/place/Autodijelovi+JUSOAJLA+d.o.o./@44.466774,18.7655521,17.75z/data=!4m6!3m5!1s0x47594f10bf67c491:0x74515860827fba41!8m2!3d44.4670118!4d18.7654339!16s%2Fg%2F11rs2f5flx?entry=ttu" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                Otvori lokaciju
+              </a>
+            </div>
+          </div>
+          <div class="hero-photo"><img src="assets/naslovna.jpg" alt="JUSO AJLA informacije, adresa i radno vrijeme" fetchpriority="high"></div>
+        </div>
+
+        <div class="quick-facts" aria-label="Osnovne informacije">
+          <div class="fact">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.9Z"/></svg></div>
+            <div><strong>Telefon / Viber</strong><a href="tel:+38761729027">061 729 027</a></div>
+          </div>
+          <div class="fact">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div><strong>Radno vrijeme</strong><span>Pon–Pet 08:00–16:00 • Sub 08:00–14:00</span></div>
+          </div>
+          <div class="fact">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+            <div><strong>Adresa</strong><a href="#kontakt">Vukovije Gornje bb, Kalesija</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Usluge</span>
+          <h2>Sve što vam treba na jednom mjestu</h2>
+          <p class="lead">Jednostavan izbor, brza ugradnja i pomoć pri odabiru akumulatora koji odgovara vašem vozilu.</p>
+        </div>
+        <div class="services">
+          <article class="service-card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg></div>
+            <h3>Prodaja i ugradnja</h3>
+            <p>Odabir odgovarajućeg akumulatora i stručna ugradnja na vozilo.</p>
+          </article>
+          <article class="service-card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-9M14 3l-4 4 4 4M4 17h9M10 13l4 4-4 4"/></svg></div>
+            <h3>Otkup i zamjena</h3>
+            <p>Donesite stari akumulator i raspitajte se o mogućnosti otkupa ili zamjene.</p>
+          </article>
+          <article class="service-card">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Provjera i savjet</h3>
+            <p>Pomažemo pri izboru kapaciteta i tipa akumulatora prema potrebama vozila.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="akumulatori">
+      <div class="container">
+        <div class="catalog-shell">
+          <div class="catalog-top">
+            <div>
+              <span class="eyebrow">Ponuda</span>
+              <h2>Akumulatori</h2>
+              <p>Pretražite cjenovnik po kapacitetu akumulatora (Ah).</p>
+            </div>
+            <label class="search" aria-label="Pretraga akumulatora">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <input id="catalogSearch" type="search" placeholder="Unesite Ah, npr. 75" inputmode="numeric" autocomplete="off">
+            </label>
+          </div>
+          <div class="price-notice"><strong>Cjenovnik uz predaju starog akumulatora.</strong> Cijene ispod važe kada prilikom kupovine predate svoj stari akumulator.</div>
+          <div class="catalog-grid" id="catalogGrid"></div>
+          <div class="catalog-note">Ne pronalazite kapacitet koji tražite? Moguće je da nije prikazan na stranici. Pozovite nas na 061 729 027 i provjerit ćemo ponudu za vas.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="galerija">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Galerija</span>
+          <h2>Pogledajte dio ponude u radnji</h2>
+          <p class="lead">Fotografije polica i akumulatora iz prodajnog prostora u Vukovijama Gornjim.</p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid">
+          <button class="gallery-item" type="button"><img src="assets/galerija-02.jpg" alt="Izbor akumulatora na policama" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-01.jpg" alt="Topla, MMX i Urban akumulatori" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-04.jpg" alt="CIAK, Topla i drugi akumulatori" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-05.jpg" alt="Topla AGM, MMX i Dynamic akumulatori" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-06.jpg" alt="Topla i drugi akumulatori" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-03.jpg" alt="Akumulatori iz ponude u prodavnici" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-07.jpg" alt="Urban Battery i Topla akumulatori" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-08.jpg" alt="Širi pregled ponude akumulatora" loading="lazy"></button>
+          <button class="gallery-item" type="button"><img src="assets/galerija-09.jpg" alt="CIAK, Furya i Topla akumulatori" loading="lazy"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="onama">
+      <div class="container about-grid">
+        <div class="about-photo"><img src="assets/police.jpg" alt="Police sa akumulatorima u radnji" loading="lazy"></div>
+        <div class="about-card">
+          <span class="eyebrow">O nama</span>
+          <h2>Lokalna radnja fokusirana na akumulatore</h2>
+          <p><strong>JUSO AJLA d.o.o.</strong> nalazi se u Vukovijama Gornjim kod Kalesije. Fokus radnje je prodaja akumulatora, ugradnja, otkup i zamjena.</p>
+          <p>Cilj nam je da kupac brzo dobije jednostavnu preporuku i odgovarajući akumulator prema vozilu i načinu korištenja.</p>
+          <div class="about-list">
+            <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 4 4L19 6"/></svg></span><span>Pomoć pri izboru odgovarajućeg kapaciteta i tipa.</span></div>
+            <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 4 4L19 6"/></svg></span><span>Ugradnja akumulatora na vozilo.</span></div>
+            <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 4 4L19 6"/></svg></span><span>Otkup i zamjena starih akumulatora.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="kontakt">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Kontakt i lokacija</span>
+          <h2>Dođite do nas ili nas pozovite</h2>
+          <p class="lead">Za najbržu provjeru odgovarajućeg modela, cijene ili dostupnosti, javite se telefonom prije dolaska.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>JUSO AJLA d.o.o.</h3>
+            <div class="contact-list">
+              <div class="contact-row">
+                <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+                <div><strong>Adresa</strong><a href="https://www.google.com/maps/place/Autodijelovi+JUSOAJLA+d.o.o./@44.466774,18.7655521,17.75z/data=!4m6!3m5!1s0x47594f10bf67c491:0x74515860827fba41!8m2!3d44.4670118!4d18.7654339!16s%2Fg%2F11rs2f5flx?entry=ttu" target="_blank" rel="noopener">Vukovije Gornje bb, Kalesija</a></div>
+              </div>
+              <div class="contact-row">
+                <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.9Z"/></svg></div>
+                <div><strong>Telefon / Viber</strong><a href="tel:+38761729027">061 729 027</a></div>
+              </div>
+              <div class="contact-row">
+                <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+                <div><strong>Radno vrijeme</strong><span>Pon–Pet: 08:00–16:00<br>Subota: 08:00–14:00<br>Nedjelja i praznici: neradni</span></div>
+              </div>
+            </div>
+            <div class="contact-actions">
+              <a class="btn btn-primary" href="tel:+38761729027">Pozovi radnju</a>
+              <a class="btn btn-secondary" href="https://www.google.com/maps/place/Autodijelovi+JUSOAJLA+d.o.o./@44.466774,18.7655521,17.75z/data=!4m6!3m5!1s0x47594f10bf67c491:0x74515860827fba41!8m2!3d44.4670118!4d18.7654339!16s%2Fg%2F11rs2f5flx?entry=ttu" target="_blank" rel="noopener">Navigacija</a>
+            </div>
+          </div>
+          <div class="map-wrap">
+            <iframe title="Lokacija JUSO AJLA d.o.o." src="https://www.google.com/maps?q=44.4670118,18.7654339&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div><strong>JUSO AJLA d.o.o.</strong> • Vukovije Gornje, Kalesija</div>
+      <div>© <span id="year"></span> • <a href="tel:+38761729027">061 729 027</a></div>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Uvećana fotografija">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Zatvori">×</button>
+    <img id="lightboxImage" alt="">
+  </div>
+
+  <script>
+    const akumulatori = [
+      { ah: 45, price: '80 KM' },
+      { ah: 55, price: '90 KM' },
+      { ah: 62, price: '105 KM' },
+      { ah: 75, price: '115 KM' },
+      { ah: 85, price: '135 KM' },
+      { ah: 100, price: '145 KM' }
+    ];
+
+    const catalogGrid = document.getElementById('catalogGrid');
+    const catalogSearch = document.getElementById('catalogSearch');
+
+    function renderCatalog(filter = '') {
+      const digits = filter.replace(/[^0-9]/g, '');
+      const visible = digits
+        ? akumulatori.filter(item => String(item.ah) === digits)
+        : akumulatori;
+
+      if (!visible.length) {
+        catalogGrid.innerHTML = `
+          <div class="catalog-empty">
+            <strong>Traženi kapacitet nije prikazan.</strong>
+            <p>Moguće je da imamo odgovarajući akumulator iako nije naveden na stranici. Pozovite nas i provjerit ćemo ponudu za vas.</p>
+            <a class="btn btn-primary" href="tel:+38761729027">Pozovi 061 729 027</a>
+          </div>`;
+        return;
+      }
+
+      catalogGrid.innerHTML = visible.map(item => `
+        <article class="product-card">
+          <div class="capacity">${item.ah} Ah</div>
+          <span>Cijena uz predaju starog akumulatora</span>
+          <span class="price">${item.price}</span>
+        </article>`).join('');
+    }
+
+    renderCatalog();
+    catalogSearch.addEventListener('input', e => renderCatalog(e.target.value));
+
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }));
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.parentElement.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
