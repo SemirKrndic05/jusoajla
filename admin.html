@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>JUSO AJLA | Admin</title>
+  <style>
+    :root {
+      --navy:#0b2b52;
+      --navy2:#123f73;
+      --blue:#0499d7;
+      --blue-soft:#eaf7fd;
+      --bg:#f5f8fb;
+      --surface:#fff;
+      --ink:#122033;
+      --muted:#667788;
+      --line:#e3e9ef;
+      --danger:#c73737;
+      --danger-soft:#fff0f0;
+      --success:#147a43;
+      --success-soft:#eaf8f0;
+      --shadow:0 16px 45px rgba(12,35,64,.08);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .hidden{display:none!important}
+    .shell{width:min(1080px,calc(100% - 30px));margin:0 auto;padding:32px 0 60px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--navy)}
+    .brand img{width:110px;height:64px;object-fit:contain;mix-blend-mode:multiply}
+    .brand strong{display:block;font-size:1.05rem}.brand span{display:block;font-size:.78rem;color:var(--muted)}
+    .back{color:var(--navy);text-decoration:none;font-weight:800;background:white;border:1px solid var(--line);padding:11px 15px;border-radius:12px}
+    .card{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .login-card{max-width:470px;margin:8vh auto 0;padding:32px}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.04em;margin-bottom:8px;color:var(--navy)}
+    h2{color:var(--navy);letter-spacing:-.025em}
+    .muted{color:var(--muted)}
+    label{display:block;font-size:.84rem;font-weight:800;color:#415368;margin-bottom:7px}
+    .field{margin-top:17px}
+    input[type="email"],input[type="password"],input[type="number"]{width:100%;height:48px;border:1px solid #d7e0e7;background:#fbfcfd;border-radius:12px;padding:0 13px;outline:none}
+    input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(4,153,215,.1)}
+    .btn{border:0;border-radius:12px;min-height:46px;padding:0 17px;font-weight:850;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+    .btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--navy2)}
+    .btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{filter:brightness(.94)}
+    .btn-soft{background:#f1f5f8;color:var(--navy);border:1px solid var(--line)}
+    .btn-danger{background:var(--danger-soft);color:var(--danger);border:1px solid #ffd6d6}
+    .login-card .btn{width:100%;margin-top:22px}
+    .message{margin-top:15px;padding:11px 13px;border-radius:10px;font-size:.9rem;display:none}
+    .message.show{display:block}.message.error{background:var(--danger-soft);color:var(--danger)}.message.success{background:var(--success-soft);color:var(--success)}
+    .admin-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:22px}
+    .admin-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .add-card{padding:24px;margin-bottom:22px}
+    .form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:end}
+    .switch-wrap{height:48px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:0 13px;background:#fbfcfd}
+    .switch-wrap input{width:18px;height:18px}
+    .list{display:grid;gap:14px}
+    .battery{padding:20px;display:grid;grid-template-columns:1.1fr .8fr .8fr .8fr auto;gap:14px;align-items:end}
+    .battery-title{align-self:center}.battery-title strong{font-size:1.45rem;color:var(--navy);display:block}.battery-title span{font-size:.82rem;color:var(--muted)}
+    .battery-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+    .status-pill{display:inline-flex;margin-top:7px;padding:5px 9px;border-radius:999px;font-size:.76rem;font-weight:850}
+    .status-pill.on{background:var(--success-soft);color:var(--success)}.status-pill.off{background:#f2f4f6;color:#6f7984}
+    .empty{padding:32px;text-align:center;color:var(--muted)}
+    .small{font-size:.78rem;color:var(--muted);margin-top:6px}
+    @media(max-width:850px){.form-grid{grid-template-columns:1fr 1fr}.battery{grid-template-columns:1fr 1fr}.battery-title,.battery-actions{grid-column:1/-1}.battery-actions{justify-content:flex-start}}
+    @media(max-width:560px){.shell{width:min(100% - 20px,1080px);padding-top:18px}.topbar{align-items:flex-start}.brand span{display:none}.brand img{width:90px}.login-card{padding:24px}.admin-head{flex-direction:column}.form-grid,.battery{grid-template-columns:1fr}.battery-title,.battery-actions{grid-column:auto}.battery-actions .btn{flex:1}.add-card{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.png" alt="JUSO AJLA logo">
+        <div><strong>JUSO AJLA d.o.o.</strong><span>Administracija akumulatora</span></div>
+      </a>
+      <a class="back" href="index.html">← Nazad na sajt</a>
+    </div>
+
+    <section id="loginView" class="card login-card">
+      <h1>Admin prijava</h1>
+      <p class="muted">Prijavite se administratorskim emailom i šifrom.</p>
+      <form id="loginForm">
+        <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+        <div class="field"><label for="password">Šifra</label><input id="password" type="password" autocomplete="current-password" required></div>
+        <button class="btn btn-primary" type="submit" id="loginBtn">Prijavi se</button>
+        <div class="message" id="loginMessage"></div>
+      </form>
+    </section>
+
+    <main id="adminView" class="hidden">
+      <div class="admin-head">
+        <div>
+          <h1>Akumulatori</h1>
+          <p class="muted">Promjene se odmah prikazuju na javnoj stranici.</p>
+          <div class="small" id="signedInAs"></div>
+        </div>
+        <div class="admin-actions">
+          <a class="btn btn-soft" href="index.html" target="_blank">Otvori javni sajt</a>
+          <button class="btn btn-danger" id="logoutBtn" type="button">Odjavi se</button>
+        </div>
+      </div>
+
+      <section class="card add-card">
+        <h2>Dodaj akumulator</h2>
+        <form id="addForm" class="form-grid">
+          <div><label for="newAh">Kapacitet (Ah)</label><input id="newAh" type="number" min="1" step="1" required></div>
+          <div><label for="newPrice">Cijena (KM)</label><input id="newPrice" type="number" min="0" step="1" required></div>
+          <div><label for="newStock">Stanje (kom.)</label><input id="newStock" type="number" min="0" step="1" value="0" required></div>
+          <div>
+            <label>Vidljiv na sajtu</label>
+            <div class="switch-wrap"><input id="newActive" type="checkbox" checked><span>Aktivan</span></div>
+          </div>
+          <div style="grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button class="btn btn-blue" type="submit" id="addBtn">+ Dodaj akumulator</button>
+            <div class="message" id="addMessage" style="margin-top:0"></div>
+          </div>
+        </form>
+      </section>
+
+      <section id="batteryList" class="list">
+        <div class="card empty">Učitavanje akumulatora...</div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js';
+    import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwB0G3mFKUDrE_sAL9gc0LwXKf1E2Gz_s",
+      authDomain: "jusoajla.firebaseapp.com",
+      projectId: "jusoajla",
+      storageBucket: "jusoajla.firebasestorage.app",
+      messagingSenderId: "780169204154",
+      appId: "1:780169204154:web:9f466c86bcbf07f76b4d83"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loginView = document.getElementById('loginView');
+    const adminView = document.getElementById('adminView');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginMessage = document.getElementById('loginMessage');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const signedInAs = document.getElementById('signedInAs');
+    const addForm = document.getElementById('addForm');
+    const addBtn = document.getElementById('addBtn');
+    const addMessage = document.getElementById('addMessage');
+    const batteryList = document.getElementById('batteryList');
+
+    let unsubscribeBatteries = null;
+    let batteries = [];
+
+    function showMessage(el, text, type='error') {
+      el.textContent = text;
+      el.className = `message show ${type}`;
+    }
+    function clearMessage(el) {
+      el.textContent = '';
+      el.className = 'message';
+    }
+    function friendlyAuthError(code) {
+      if (code === 'auth/invalid-credential') return 'Pogrešan email ili šifra.';
+      if (code === 'auth/too-many-requests') return 'Previše pokušaja. Pokušajte ponovo malo kasnije.';
+      if (code === 'auth/network-request-failed') return 'Problem sa internet vezom.';
+      return 'Prijava nije uspjela. Provjerite podatke i pokušajte ponovo.';
+    }
+
+    loginForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      clearMessage(loginMessage);
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Prijavljivanje...';
+      try {
+        await signInWithEmailAndPassword(auth, document.getElementById('email').value.trim(), document.getElementById('password').value);
+        loginForm.reset();
+      } catch (err) {
+        console.error(err);
+        showMessage(loginMessage, friendlyAuthError(err.code));
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Prijavi se';
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => signOut(auth));
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        loginView.classList.add('hidden');
+        adminView.classList.remove('hidden');
+        signedInAs.textContent = `Prijavljen: ${user.email}`;
+        startBatteryListener();
+      } else {
+        if (unsubscribeBatteries) { unsubscribeBatteries(); unsubscribeBatteries = null; }
+        adminView.classList.add('hidden');
+        loginView.classList.remove('hidden');
+        batteryList.innerHTML = '<div class="card empty">Učitavanje akumulatora...</div>';
+      }
+    });
+
+    function startBatteryListener() {
+      if (unsubscribeBatteries) unsubscribeBatteries();
+      unsubscribeBatteries = onSnapshot(collection(db, 'akumulatori'), snapshot => {
+        batteries = snapshot.docs.map(d => ({ id:d.id, ...d.data() })).sort((a,b) => Number(a.ah)-Number(b.ah));
+        renderBatteries();
+      }, err => {
+        console.error(err);
+        batteryList.innerHTML = '<div class="card empty">Nije moguće učitati podatke. Provjerite Firebase pravila i internet vezu.</div>';
+      });
+    }
+
+    function renderBatteries() {
+      if (!batteries.length) {
+        batteryList.innerHTML = '<div class="card empty">Još nema unesenih akumulatora.</div>';
+        return;
+      }
+      batteryList.innerHTML = batteries.map(item => `
+        <article class="card battery" data-id="${item.id}">
+          <div class="battery-title">
+            <strong>${Number(item.ah) || 0} Ah</strong>
+            <span>Dokument: ${escapeHtml(item.id)}</span>
+            <span class="status-pill ${item.aktivan ? 'on':'off'}">${item.aktivan ? 'Vidljiv na sajtu':'Sakriven'}</span>
+          </div>
+          <div><label>Kapacitet (Ah)</label><input class="edit-ah" type="number" min="1" step="1" value="${Number(item.ah) || 0}"></div>
+          <div><label>Cijena (KM)</label><input class="edit-price" type="number" min="0" step="1" value="${Number(item.cijena) || 0}"></div>
+          <div><label>Stanje (kom.)</label><input class="edit-stock" type="number" min="0" step="1" value="${Number(item.stanje) || 0}"></div>
+          <div class="battery-actions">
+            <button class="btn btn-primary save-btn" type="button">Sačuvaj</button>
+            <button class="btn btn-soft toggle-btn" type="button">${item.aktivan ? 'Sakrij':'Prikaži'}</button>
+            <button class="btn btn-danger delete-btn" type="button">Obriši</button>
+          </div>
+        </article>`).join('');
+
+      batteryList.querySelectorAll('.battery').forEach(card => {
+        const id = card.dataset.id;
+        const item = batteries.find(x => x.id === id);
+        card.querySelector('.save-btn').addEventListener('click', () => saveBattery(card, item));
+        card.querySelector('.toggle-btn').addEventListener('click', () => toggleBattery(item));
+        card.querySelector('.delete-btn').addEventListener('click', () => removeBattery(item));
+      });
+    }
+
+    async function saveBattery(card, item) {
+      const btn = card.querySelector('.save-btn');
+      const ah = Number(card.querySelector('.edit-ah').value);
+      const cijena = Number(card.querySelector('.edit-price').value);
+      const stanje = Number(card.querySelector('.edit-stock').value);
+      if (!Number.isFinite(ah) || ah <= 0 || !Number.isFinite(cijena) || cijena < 0 || !Number.isInteger(stanje) || stanje < 0) {
+        alert('Provjerite Ah, cijenu i stanje. Stanje mora biti cijeli broj 0 ili veći.');
+        return;
+      }
+      btn.disabled = true; btn.textContent = 'Čuvanje...';
+      try {
+        await updateDoc(doc(db, 'akumulatori', item.id), { ah, cijena, stanje });
+      } catch (err) {
+        console.error(err);
+        alert(err.code === 'permission-denied' ? 'Ovaj nalog nema dozvolu za izmjene.' : 'Greška pri čuvanju promjene.');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Sačuvaj';
+      }
+    }
+
+    async function toggleBattery(item) {
+      try {
+        await updateDoc(doc(db, 'akumulatori', item.id), { aktivan: !item.aktivan });
+      } catch (err) {
+        console.error(err);
+        alert(err.code === 'permission-denied' ? 'Ovaj nalog nema dozvolu za izmjene.' : 'Greška pri promjeni vidljivosti.');
+      }
+    }
+
+    async function removeBattery(item) {
+      if (!confirm(`Obrisati ${item.ah} Ah iz baze? Ova radnja se ne može poništiti.`)) return;
+      try {
+        await deleteDoc(doc(db, 'akumulatori', item.id));
+      } catch (err) {
+        console.error(err);
+        alert(err.code === 'permission-denied' ? 'Ovaj nalog nema dozvolu za brisanje.' : 'Greška pri brisanju.');
+      }
+    }
+
+    addForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      clearMessage(addMessage);
+      const ah = Number(document.getElementById('newAh').value);
+      const cijena = Number(document.getElementById('newPrice').value);
+      const stanje = Number(document.getElementById('newStock').value);
+      const aktivan = document.getElementById('newActive').checked;
+      if (!Number.isFinite(ah) || ah <= 0 || !Number.isFinite(cijena) || cijena < 0 || !Number.isInteger(stanje) || stanje < 0) {
+        showMessage(addMessage, 'Provjerite unesene vrijednosti.');
+        return;
+      }
+      addBtn.disabled = true; addBtn.textContent = 'Dodavanje...';
+      try {
+        await addDoc(collection(db, 'akumulatori'), { ah, cijena, stanje, aktivan });
+        addForm.reset();
+        document.getElementById('newStock').value = 0;
+        document.getElementById('newActive').checked = true;
+        showMessage(addMessage, 'Akumulator je uspješno dodat.', 'success');
+      } catch (err) {
+        console.error(err);
+        showMessage(addMessage, err.code === 'permission-denied' ? 'Ovaj nalog nema dozvolu za dodavanje.' : 'Greška pri dodavanju akumulatora.');
+      } finally {
+        addBtn.disabled = false; addBtn.textContent = '+ Dodaj akumulator';
+      }
+    });
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+    }
+  </script>
+</body>
+</html>
