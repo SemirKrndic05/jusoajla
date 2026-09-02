@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta name="referrer" content="same-origin">
+  <link rel="icon" href="assets/favicon.ico" sizes="any">
   <title>JUSO AJLA | Admin</title>
   <style>
     :root {
@@ -73,11 +76,11 @@
 <body>
   <div class="shell">
     <div class="topbar">
-      <a class="brand" href="index.html">
-        <img src="assets/logo.png" alt="JUSO AJLA logo">
+      <a class="brand" href="/">
+        <img src="assets/logo.webp" width="440" height="240" alt="JUSO AJLA logo" decoding="async">
         <div><strong>JUSO AJLA d.o.o.</strong><span>Administracija akumulatora</span></div>
       </a>
-      <a class="back" href="index.html">← Nazad na sajt</a>
+      <a class="back" href="/">← Nazad na sajt</a>
     </div>
 
     <section id="loginView" class="card login-card">
@@ -99,7 +102,7 @@
           <div class="small" id="signedInAs"></div>
         </div>
         <div class="admin-actions">
-          <a class="btn btn-soft" href="index.html" target="_blank">Otvori javni sajt</a>
+          <a class="btn btn-soft" href="/" target="_blank">Otvori javni sajt</a>
           <button class="btn btn-danger" id="logoutBtn" type="button">Odjavi se</button>
         </div>
       </div>
